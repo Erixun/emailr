@@ -7,7 +7,7 @@ router.get(
   "/google",
   passport.authenticate("google", {
     scope: ["profile", "email"],
-    //what access we want to have, from a (key)list of scopes
+    //aka what access we want to have, from a (key)list of scopes
   })
 );
 
