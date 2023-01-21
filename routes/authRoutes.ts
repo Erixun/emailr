@@ -14,6 +14,16 @@ router.get(
 //route to receive accessToken
 router.get("/google/callback", passport.authenticate("google"));
 
+router.get("/api/currentUser", (req, res, next) => {
+  res.send(req.user);
+});
+
+router.get("/api/logout", (req, res, next) => {
+  req.logout({}, (err) => console.error(err));
+  res.send(req.user); //should be empty
+  //and then "/api/currentUser" will be as well
+});
+
 export default router;
 
 //Alternatively:
