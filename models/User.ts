@@ -1,6 +1,19 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
-const userSchema = new Schema({
+declare global {
+  namespace Express {
+    interface User {
+      id?: mongoose.Types.ObjectId;
+      googleId: string;
+    }
+  }
+}
+
+export interface IUser {
+  googleId: string;
+}
+
+const userSchema = new Schema<IUser>({
   googleId: String,
 });
 
