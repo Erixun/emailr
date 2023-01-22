@@ -2,7 +2,6 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import Express from "express";
 import authRoutes from "./routes/authRoutes.js";
-import user from "./models/User.js";
 import "./services/passport.js";
 import { connect } from "mongoose";
 import passport from "passport";
