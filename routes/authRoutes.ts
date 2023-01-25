@@ -12,7 +12,9 @@ router.get(
 );
 
 //route to receive accessToken
-router.get("/google/callback", passport.authenticate("google"));
+router.get("/google/callback", passport.authenticate("google"), (req, res) => {
+  res.redirect("/surveys");
+});
 
 router.get("/api/currentUser", (req, res, next) => {
   res.send(req.user);
