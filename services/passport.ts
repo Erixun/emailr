@@ -2,9 +2,9 @@ import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import * as dotenv from "dotenv";
 dotenv.config();
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "../config/keys.js";
+//ts-ignore
+// import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "../config/keys.js";
 
-import mongoose, { HydratedDocument } from "mongoose";
 //model Class, use Pascal case
 import User, { IUser } from "../models/User.js";
 
@@ -28,8 +28,8 @@ passport.deserializeUser((id, done) => {
 const passportConfig = passport.use(
   new GoogleStrategy( //I am known as a strategy called 'google'
     {
-      clientID: GOOGLE_CLIENT_ID ?? "",
-      clientSecret: GOOGLE_CLIENT_SECRET ?? "",
+      clientID: process.env.GOOGLE_CLIENT_ID ?? "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
       callbackURL: "/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
