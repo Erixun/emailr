@@ -30,7 +30,10 @@ const passportConfig = passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+      //relative address causes reversion to http!
+      //absolute address can solve the problem
       callbackURL: "/auth/google/callback",
+      proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
       //code received at /auth/google/callback
