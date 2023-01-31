@@ -1,24 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h2>Hi There</h2>
       </header>
+      <p className="App-intro">
+        To get started, edit <code>src/App.js</code> and reload.
+      </p>
+      {/* Sometimes we want a working relative path to
+      server localhost:5000... */}
+      <a href="/auth/google">Sign in With Google</a>
     </div>
   );
 }
