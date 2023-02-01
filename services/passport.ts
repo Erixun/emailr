@@ -44,16 +44,17 @@ const passportConfig = passport.use(
 
       //every time we reach out to our DB
       // we are initiating an async action
-      User.findOne({ googleId: profile.id }).then((existingUser) => {
-        //we already have a record with the given profile ID
-        if (existingUser) return done(null, existingUser);
+      const existingUser = await User.findOne({ googleId: profile.id });
+      // .then((existingUser) => {
+      //we already have a record with the given profile ID
+      if (existingUser) return done(null, existingUser);
 
-        //we don't have a user record with this ID,
-        //make a new record in the DB
-        new User({ googleId: profile.id })
-          .save()
-          .then((user) => done(null, user));
-      });
+      //we don't have a user record with this ID,
+      //make a new record in the DB
+      const user = await new User({ googleId: profile.id }).save();
+      // .then((user) => done(null, user));
+      done(null, user);
+      // });
     }
   )
 ); //generic register of strategies
