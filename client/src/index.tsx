@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { createAction, createReducer } from "@reduxjs/toolkit";
-
+import reducers from "./reducers";
 import App from "./components/App";
 interface CounterState {
   value: number;
@@ -29,8 +29,6 @@ const counterReducer = createReducer(initialState, (builder) => {
     });
 });
 
-const store = createStore(() => [], {}, applyMiddleware());
-
 configureStore({
   reducer: counterReducer,
   devTools: process.env.NODE_ENV !== "production",
@@ -38,8 +36,11 @@ configureStore({
   // enhancers
 });
 
+const store = createStore(reducers, {} as any, applyMiddleware());
 const root = document.getElementById("root");
 render(
+  //Serves as "glue" between React
+  //and the Redux side of our application:
   <Provider store={store}>
     <App />
   </Provider>,
