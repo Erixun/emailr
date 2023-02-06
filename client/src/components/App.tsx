@@ -12,7 +12,14 @@ const App = () => {
       <BrowserRouter>
         {/* Collection of routes */}
         <div>
-          <Route path="/" component={Landing} />
+          {/* Header always visible, regardless of route */}
+          {/* Content customized based on sign-in status */}
+          <Header />
+
+          {/* Greedily matching, unless exact */}
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/surveys" component={Dashboard} />
+          <Route path="/surveys/new" component={SurveyNew} />
         </div>
       </BrowserRouter>
     </div>
