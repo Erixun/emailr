@@ -1,4 +1,5 @@
 //Sets up data layer of our application (Redux)
+import "materialize-css/dist/css/materialize.min.css";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
