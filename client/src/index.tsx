@@ -7,6 +7,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { createAction, createReducer } from "@reduxjs/toolkit";
 import reducers from "./reducers";
 import App from "./components/App";
+import reduxThunk from "redux-thunk";
+
 interface CounterState {
   value: number;
 }
@@ -37,7 +39,8 @@ configureStore({
   // enhancers
 });
 
-const store = createStore(reducers, {} as any, applyMiddleware());
+const store = createStore(reducers, {} as any, applyMiddleware(reduxThunk));
+
 const root = document.getElementById("root");
 render(
   //Serves as "glue" between React
