@@ -8,7 +8,8 @@ const Landing = () => <h2>Landing</h2>;
 
 const App = () => {
   return (
-    <div>
+    //container class improves materialize styling
+    <div className="container">
       <BrowserRouter>
         {/* Collection of routes */}
         <div>
