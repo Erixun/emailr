@@ -39,6 +39,8 @@ configureStore({
   // enhancers
 });
 
+// reduxThunk inspects whatever value we return from the action creator,
+// if value is a function then reduxThunk will immediately call that function passing in dispatch(function) as an argument
 const store = createStore(reducers, {} as any, applyMiddleware(reduxThunk));
 
 const root = document.getElementById("root");
