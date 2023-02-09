@@ -10,6 +10,7 @@ export const authReducer2 = createReducer({ counter: 0 }, (builder) => {
 });
 
 const authReducer = function (state = {}, action: { type: string }) {
+  console.log(action);
   switch (action.type) {
     default:
       return state;

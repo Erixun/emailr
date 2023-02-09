@@ -26,7 +26,7 @@ connect(MONGO_URI, () => {
   console.log("Successfully connected to MongoDB database");
 });
 
-app.use("/auth", authRoutes);
+app.use("/", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

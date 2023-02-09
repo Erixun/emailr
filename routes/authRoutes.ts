@@ -4,7 +4,7 @@ const router = Router();
 
 router.get(
   //ERROR: 400: redirect_uri_mismatch ?
-  "/google",
+  "/auth/google",
   passport.authenticate("google", {
     scope: ["profile", "email"],
     //aka what access we want to have, from a (key)list of scopes
@@ -12,11 +12,16 @@ router.get(
 );
 
 //route to receive accessToken
-router.get("/google/callback", passport.authenticate("google"), (req, res) => {
-  res.redirect("/surveys");
-});
+router.get(
+  "/auth/google/callback",
+  passport.authenticate("google"),
+  (req, res) => {
+    res.redirect("/surveys");
+  }
+);
 
-router.get("/api/currentUser", (req, res, next) => {
+router.get("/api/current_user", (req, res, next) => {
+  console.log("call currentUser?");
   res.send(req.user);
 });
 

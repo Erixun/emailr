@@ -9,10 +9,11 @@ import { FETCH_USER } from "./types";
  * Our first action creator, for fetching user on startup
  * @returns A function.
  */
-const fetchUser = () => {
+export const fetchUser = () => {
   return (dispatch: Dispatch) => {
     axios
       .get("/api/current_user")
-      .then((res) => dispatch({ type: FETCH_USER, payload: res }));
+      .then((res) => dispatch({ type: FETCH_USER, payload: res }))
+      .catch((err) => console.log(err));
   };
 };
