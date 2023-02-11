@@ -7,7 +7,7 @@ class Header extends Component<{ auth: any }> {
     return auth ? (
       // "Im logged in"
       <li>
-        <a href="/logout">Logout?</a>
+        <a href="/api/logout">Logout?</a>
       </li>
     ) : auth === false ? (
       <li>
