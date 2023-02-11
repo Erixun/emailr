@@ -17,5 +17,5 @@ export const fetchUser = () => async (dispatch: Dispatch) => {
     console.log(err);
   }
 
-  if (res) dispatch({ type: FETCH_USER, payload: res });
+  if (res) dispatch({ type: FETCH_USER, payload: res.data });
 };
