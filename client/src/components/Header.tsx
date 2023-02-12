@@ -1,7 +1,8 @@
 import { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
-class Header extends Component<{ auth: any }> {
+class Header extends Component<{ auth: any; user?: any }> {
   renderContent() {
     const auth = this.props.auth;
     return auth ? (
@@ -19,9 +20,12 @@ class Header extends Component<{ auth: any }> {
     return (
       <nav>
         <div className="nav-wrapper">
-          <a href="/" className="left brand-logo">
+          <Link
+            to={this.props.auth ? "/surveys" : "/"}
+            className="left brand-logo"
+          >
             Emailr
-          </a>
+          </Link>
           <ul className="right">{this.renderContent()}</ul>
         </div>
       </nav>
