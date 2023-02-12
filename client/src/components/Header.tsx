@@ -1,11 +1,10 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { connect } from "react-redux";
 
 class Header extends Component<{ auth: any }> {
   renderContent() {
     const auth = this.props.auth;
     return auth ? (
-      // "Im logged in"
       <li>
         <a href="/api/logout">Logout?</a>
       </li>
@@ -20,15 +19,10 @@ class Header extends Component<{ auth: any }> {
     return (
       <nav>
         <div className="nav-wrapper">
-          <a href="" className="left brand-logo">
+          <a href="/" className="left brand-logo">
             Emailr
           </a>
-          <ul className="right">
-            {this.renderContent()}
-            {/* <li>
-              <a href="/auth/google">Login with Google</a>
-            </li> */}
-          </ul>
+          <ul className="right">{this.renderContent()}</ul>
         </div>
       </nav>
     );

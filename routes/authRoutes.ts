@@ -32,9 +32,6 @@ router.get("/api/logout", (req, res, next) => {
   console.log(req.user);
   res.redirect("/");
   console.log("redirecting to /");
-  // res.send(req.user); //should be empty
-  //and then "/api/currentUser" will be as well
-  // next();
 });
 
 export default router;
