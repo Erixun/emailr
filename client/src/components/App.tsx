@@ -10,9 +10,8 @@ const Dashboard = () => <h2>Dashboard</h2>;
 const SurveyNew = () => <h2>SurveyNew</h2>;
 // const Landing = () => <h2>Landin g</h2>;
 
-class App extends Component {
+class App extends Component<{ fetchUser: Function }> {
   componentDidMount(): void {
-    //@ts-ignore
     this.props.fetchUser();
   }
   // useEffect(() => {})
