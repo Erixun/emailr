@@ -10,6 +10,7 @@ const Dashboard = () => <h2>Dashboard</h2>;
 const SurveyNew = () => <h2>SurveyNew</h2>;
 // const Landing = () => <h2>Landin g</h2>;
 
+//TODO: convert to functional component
 class App extends Component<{ fetchUser: Function }> {
   componentDidMount(): void {
     this.props.fetchUser();
