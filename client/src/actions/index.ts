@@ -19,3 +19,14 @@ export const fetchUser = () => async (dispatch: Dispatch) => {
 
   if (res) dispatch({ type: FETCH_USER, payload: res.data });
 };
+
+/**
+ *
+ * @param token Handle token received from Stripe on payment through checkout form
+ * @returns
+ */
+export const handleToken = (token: string) => async (dispatch: Dispatch) => {
+  const res = await axios.post("/api/stripe", token);
+
+  dispatch({ type: FETCH_USER, payload: res.data });
+};
