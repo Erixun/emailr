@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import Express from "express";
 import authRoutes from "./routes/authRoutes.js";
+import billingRoutes from "./routes/billingRoutes.js";
 import "./services/passport.js";
 import { connect } from "mongoose";
 import passport from "passport";
@@ -27,6 +28,7 @@ connect(MONGO_URI, () => {
 });
 
 app.use("/", authRoutes);
+app.use("/billing", billingRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

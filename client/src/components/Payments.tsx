@@ -3,14 +3,6 @@ import { connect } from "react-redux";
 import StripeCheckout, { StripeCheckoutProps } from "react-stripe-checkout";
 import * as actions from "../actions";
 
-class PayBtn extends Component<
-  StripeCheckoutProps & { children: JSX.Element | JSX.Element[] },
-  Object
-> {
-  render() {
-    return this.props.children;
-  }
-}
 class Payments extends Component<{ handleToken: Function }> {
   render() {
     // debugger;
