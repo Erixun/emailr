@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
-import Express from "express";
+import Express, { json } from "express";
 import authRoutes from "./routes/authRoutes.js";
 import billingRoutes from "./routes/billingRoutes.js";
 import "./services/passport.js";
@@ -22,10 +22,12 @@ app
   .use(passport.session());
 
 const MONGO_URI = process.env.MONGO_URI ?? "";
-console.log(MONGO_URI);
+// console.log(MONGO_URI);
 connect(MONGO_URI, () => {
   console.log("Successfully connected to MongoDB database");
 });
+
+app.use(json());
 
 app.use("/", authRoutes);
 app.use("/billing", billingRoutes);
