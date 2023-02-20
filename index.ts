@@ -7,6 +7,7 @@ import "./services/passport.js";
 import { connect } from "mongoose";
 import passport from "passport";
 import cookieSession from "cookie-session";
+import routes from "./routes/index.js";
 const app = Express();
 
 const cookieKey = process.env.COOKIE_KEY;
@@ -27,10 +28,10 @@ connect(MONGO_URI, () => {
   console.log("Successfully connected to MongoDB database");
 });
 
-app.use(json());
-
-app.use("/", authRoutes);
-app.use("/billing", billingRoutes);
+// app.use(json());
+app.use("/", routes);
+// app.use("/", authRoutes);
+// app.use("/garble", billingRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
