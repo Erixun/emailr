@@ -1,8 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import Express, { json } from "express";
-import authRoutes from "./routes/authRoutes.js";
-import billingRoutes from "./routes/billingRoutes.js";
 import "./services/passport.js";
 import { connect } from "mongoose";
 import passport from "passport";
@@ -23,15 +21,12 @@ app
   .use(passport.session());
 
 const MONGO_URI = process.env.MONGO_URI ?? "";
-// console.log(MONGO_URI);
 connect(MONGO_URI, () => {
   console.log("Successfully connected to MongoDB database");
 });
 
-// app.use(json());
+app.use(json());
 app.use("/", routes);
-// app.use("/", authRoutes);
-// app.use("/garble", billingRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

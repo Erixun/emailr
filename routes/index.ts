@@ -4,7 +4,7 @@ import billingRoutes from "./billingRoutes.js";
 
 const router = Router();
 
-router.use("/garbled", billingRoutes); //"/api/billing", billingRoutes);
+router.use("/api/stripe", billingRoutes);
 router.use("/", authRoutes);
 
 export default router;
