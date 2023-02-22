@@ -5,16 +5,19 @@ declare global {
     interface User {
       id?: mongoose.Types.ObjectId;
       googleId: string;
+      credits: any;
     }
   }
 }
 
 export interface IUser {
   googleId: string;
+  credits: { type: Number; default: 0 };
 }
 
 const userSchema = new Schema<IUser>({
   googleId: String,
+  credits: { type: Number, default: 0 },
 });
 
 const User = model("users", userSchema);
