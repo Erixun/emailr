@@ -1,6 +1,7 @@
 import { Request, Router } from "express";
 import Stripe from "stripe";
 import dotenv from "dotenv";
+import requireLogin from "../middleware/requireLogin.js";
 dotenv.config();
 
 const stripe = new Stripe(process.env.STRIPE_SK || "STRIPE_SK", {
@@ -8,12 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SK || "STRIPE_SK", {
 });
 const router = Router();
 
-router.post("/", async (req, res, next) => {
-  if (!req.user) {
-    return res
-      .status(401)
-      .send({ error: "Unauthorized. You are not logged in." });
-  }
+router.post("/", requireLogin, async (req, res, next) => {
   const charge = await stripe.charges.create({
     amount: 500,
     currency: "usd",
@@ -21,7 +17,7 @@ router.post("/", async (req, res, next) => {
     source: req.body.id,
   });
 
-  req.user.credits += 5;
+  req.user!.credits += 5;
   //@ts-ignore
   const user = await req.user.save();
   return res.send(user);
