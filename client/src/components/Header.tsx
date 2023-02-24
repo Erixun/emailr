@@ -21,7 +21,10 @@ class Header extends Component<{ auth: any; user?: any }> {
           <li key={1}>
             <Payments />
           </li>,
-          <li key={2}>
+          <li key={2} style={{ margin: "0 10px" }}>
+            Credits: {this.props.auth.credits}
+          </li>,
+          <li key={3}>
             <a href="/api/logout">Logout?</a>
           </li>,
         ];
@@ -35,6 +38,7 @@ class Header extends Component<{ auth: any; user?: any }> {
           <Link
             to={this.props.auth ? "/surveys" : "/"}
             className="left brand-logo"
+            style={{ paddingLeft: "10px" }}
           >
             Emailr
           </Link>

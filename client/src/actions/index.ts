@@ -21,9 +21,9 @@ export const fetchUser = () => async (dispatch: Dispatch) => {
 };
 
 /**
- *
- * @param token Handle token received from Stripe on payment through checkout form
- * @returns
+ *Handle token received from Stripe on payment through checkout form.
+ * @param token Token received from Stripe.
+ * @returns An async function for handling POST request and action dispatch.
  */
 export const handleToken = (token: string) => async (dispatch: Dispatch) => {
   const res = await axios.post("/api/stripe", token);
