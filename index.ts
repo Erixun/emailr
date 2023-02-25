@@ -1,5 +1,6 @@
 import * as dotenv from "dotenv";
 dotenv.config();
+import path from "path";
 import Express, { json } from "express";
 import "./services/passport.js";
 import { connect } from "mongoose";
@@ -27,6 +28,18 @@ connect(MONGO_URI, () => {
 
 app.use(json());
 app.use("/", routes);
+
+if (process.env.NODE_ENV === "production") {
+  // Express will serve up production assets
+  // like our main.js file, or main.css file!
+  app.use(Express.static("client/build"));
+
+  // Express will serve up the index.html file
+  // if it doesn't recognize the route
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
