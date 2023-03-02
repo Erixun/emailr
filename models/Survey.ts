@@ -16,5 +16,7 @@ const surveySchema = new Schema({
 
 const Survey = mongoose.model("surveys", surveySchema);
 
+export type SurveyModel = typeof Survey;
+
 //should not be exported?
 export default Survey;
