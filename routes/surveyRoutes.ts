@@ -5,7 +5,7 @@ import requireLogin from "../middleware/requireLogin.js";
 import { SurveyModel } from "../models/Survey.js";
 
 const router = Router();
-const Survey = mongoose.model<SurveyModel>("surveys>");
+const Survey = mongoose.model<SurveyModel>("surveys");
 router.post("/api/surveys", requireLogin, requireCredits, (req, res, next) => {
   const { title, subject, body, recipient } = req.body;
 
@@ -13,6 +13,11 @@ router.post("/api/surveys", requireLogin, requireCredits, (req, res, next) => {
     title,
     subject,
     body,
+    recipient: recipient
+      .split(",")
+      .map((email: string) => ({ email: email.trim() })),
+    _user: req.user?.id,
+    dateSent: Date.now(),
   });
   res.send("unfinished route");
 });
