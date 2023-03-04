@@ -1,11 +1,9 @@
 import { Router } from "express";
-import mongoose from "mongoose";
 import requireCredits from "../middleware/requireCredits.js";
 import requireLogin from "../middleware/requireLogin.js";
-import { SurveyModel } from "../models/Survey.js";
+import Survey from "../models/Survey.js";
 
 const router = Router();
-const Survey = mongoose.model<SurveyModel>("surveys");
 // Creates a new survey and sends out emails in batch
 router.post("/api/surveys", requireLogin, requireCredits, (req, res, next) => {
   const { title, subject, body, recipient } = req.body;
