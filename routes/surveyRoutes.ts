@@ -2,6 +2,8 @@ import { Router } from "express";
 import requireCredits from "../middleware/requireCredits.js";
 import requireLogin from "../middleware/requireLogin.js";
 import Survey from "../models/Survey.js";
+import Mailer from "../services/Mailer.js";
+import surveyTemplate from "../services/templates/surveyTemplate.js";
 
 const router = Router();
 // Creates a new survey and sends out emails in batch
@@ -20,6 +22,9 @@ router.post("/api/surveys", requireLogin, requireCredits, (req, res, next) => {
     dateSent: Date.now(),
   });
 
+  // Great place to send an email! (WIP)
+  const mailer = new Mailer(survey, surveyTemplate(survey));
+  mailer.send();
   //Email template
 
   // Mailer - Sendgrid scans each email,
