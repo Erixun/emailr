@@ -7,15 +7,15 @@ import surveyTemplate from "../services/templates/surveyTemplate.js";
 
 const router = Router();
 // Creates a new survey and sends out emails in batch
-router.post("/api/surveys", requireLogin, requireCredits, (req, res, next) => {
-  const { title, subject, body, recipient } = req.body;
+router.post("/", requireLogin, requireCredits, (req, res, next) => {
+  const { title, subject, body, recipients } = req.body;
 
   //Survey instance
   const survey = new Survey({
     title,
     subject,
     body,
-    recipient: recipient
+    recipients: recipients
       .split(",")
       .map((email: string) => ({ email: email.trim() })),
     _user: req.user?.id,

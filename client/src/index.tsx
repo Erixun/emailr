@@ -8,6 +8,12 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 import reducers from "./reducers";
 import App from "./components/App";
 import reduxThunk from "redux-thunk";
+// import axios from "axios";
+
+//In order to test requests to surveyRoutes
+//const survey = {title: 'title X', subject: 'subject X', recipients: 'emailr.servant@gmail.com'}
+//@ts-ignore
+// window.axios = axios;
 
 interface CounterState {
   value: number;
