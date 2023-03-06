@@ -1,13 +1,15 @@
-import { Router } from "express";
+import { Request, Router } from "express";
+import mongoose from "mongoose";
 import requireCredits from "../middleware/requireCredits.js";
 import requireLogin from "../middleware/requireLogin.js";
 import Survey from "../models/Survey.js";
+import { IUser } from "../models/User.js";
 import Mailer from "../services/Mailer.js";
 import surveyTemplate from "../services/templates/surveyTemplate.js";
 
 const router = Router();
 // Creates a new survey and sends out emails in batch
-router.post("/", requireLogin, requireCredits, (req, res, next) => {
+router.post("/", requireLogin, requireCredits, async (req, res, next) => {
   const { title, subject, body, recipients } = req.body;
 
   //Survey instance
@@ -24,7 +26,15 @@ router.post("/", requireLogin, requireCredits, (req, res, next) => {
 
   // Great place to send an email! (WIP)
   const mailer = new Mailer(survey, surveyTemplate(survey));
-  mailer.send();
+  try {
+    await mailer.send();
+    await survey.save();
+
+    req.user!.credits -= 1;
+    const user = await req.user!.save();
+  } catch (error) {
+    return res.status(422).send(error);
+  }
   //Email template
 
   // Mailer - Sendgrid scans each email,

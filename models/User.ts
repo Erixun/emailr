@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 declare global {
   namespace Express {
-    interface User {
+    interface User extends mongoose.Document {
       id?: mongoose.Types.ObjectId;
       googleId: string;
       credits: any;

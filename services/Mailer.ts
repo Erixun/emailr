@@ -63,7 +63,7 @@ class Mailer extends Mail {
       body: this.toJSON(),
     });
 
-    const response = this.sendGridApi.API(request);
+    const response = await this.sendGridApi.API(request);
     return response;
   }
 }
