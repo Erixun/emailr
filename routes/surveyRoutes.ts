@@ -32,26 +32,18 @@ router.post("/", requireLogin, requireCredits, async (req, res, next) => {
 
     req.user!.credits -= 1;
     const user = await req.user!.save();
+    res.send(user);
   } catch (error) {
     return res.status(422).send(error);
   }
-  //Email template
-
-  // Mailer - Sendgrid scans each email,
-  //          replacing every link with their own.
-  // They know the recipient of every email and links injected
-  // into an email contains a token to identify the user.
-
-  //Link-click effect:
-  // 1. User gets sent to their destination.
-  // 2. Sendgrid sends msg to our server informing us of the click.
-
+});
+router.get("/", requireLogin, (req, res, next) => {
   res.send("unfinished route");
 });
-router.get("/api/surveys", requireLogin, (req, res, next) => {
-  res.send("unfinished route");
+router.get("/responded", (req, res, next) => {
+  res.send("Thanks for voting!");
 });
-router.post("/api/surveys/webhooks", (req, res, next) => {
+router.post("/webhooks", (req, res, next) => {
   res.send("unfinished route");
 });
 

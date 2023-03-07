@@ -1,15 +1,27 @@
 import sendGrid, { mail as helper } from "sendgrid";
-// const helper = sendgrid.mail;
-// import keys from "../config/keys.js";
-//OR ?
 import dotenv from "dotenv";
-import { SurveyModel } from "../models/Survey.js";
 dotenv.config();
 const { SEND_GRID_KEY } = process.env;
 if (!SEND_GRID_KEY) throw Error("ERROR - Sendgrid key is undefined");
 
 type ListRecipients = Array<{ email?: string; responded: boolean }>;
 const { Mail } = helper;
+
+// Sendgrid scans each email,
+// replacing each link with their own.
+// They know the recipient of every email and links injected
+// into an email contains a token to identify the user.
+
+//Link-click effect:
+// 1. User gets sent to their destination.
+// 2. Sendgrid sends msg to our server informing us of the click.
+
+/**
+ * Mailer class to be used by surveyRoutes. Based on Sendgrid's Mail class.
+ * @param subject The subject of the email.
+ * @param recipients The recipients of the email.
+ * @param content The content of the email.
+ */
 class Mailer extends Mail {
   from_email;
   subject;

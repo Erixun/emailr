@@ -11,7 +11,7 @@ import reduxThunk from "redux-thunk";
 import axios from "axios";
 
 //In order to test requests to surveyRoutes
-//const survey = {title: 'title X', subject: 'subject X', recipients: 'emailr.servant@gmail.com'}
+//const survey = {title: 'title X', subject: 'subject X', body: 'Do you have anything to be grateful for?', recipients: 'emailr.servant@gmail.com'}
 //@ts-ignore
 window.axios = axios;
 
