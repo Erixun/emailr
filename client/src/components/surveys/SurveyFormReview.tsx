@@ -1,7 +1,9 @@
-import { useSelector } from "react-redux";
+import { connect, RootStateOrAny, useSelector } from "react-redux";
+import { getFormValues } from "redux-form";
 
-const SurveyFormReview = () => {
-  const formValues = useSelector((state: any) => state.form.surveyForm.values);
+const SurveyFormReview = ({ formValues }: { formValues: any }) => {
+  console.log(formValues);
+  // const formValues = getFormValues("surveyForm"); //useSelector((state: any) => state.form.surveyForm);
 
   return (
     <div>
@@ -28,4 +30,10 @@ const SurveyFormReview = () => {
   );
 };
 
-export default SurveyFormReview;
+const mapStateToProps = (state: RootStateOrAny) => {
+  return {
+    formValues: getFormValues("surveyForm")(state) || {},
+  };
+};
+
+export default connect(mapStateToProps)(SurveyFormReview);
