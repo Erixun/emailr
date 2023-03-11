@@ -1,6 +1,8 @@
 const validateEmails = (emailCsv: string): string | false => {
   const emails = emailCsv.split(",").map((email) => email.trim());
-  const invalidEmails = emails.filter((email) => !validateEmail(email));
+  const invalidEmails = emails
+    .filter((email) => !validateEmail(email))
+    .join(", ");
   if (invalidEmails.length) {
     return `These emails are invalid: ${invalidEmails}`;
   }
