@@ -9,6 +9,7 @@ import reducers from "./reducers";
 import App from "./components/App";
 import reduxThunk from "redux-thunk";
 import axios from "axios";
+import { createRoot } from "react-dom/client";
 
 //In order to test requests to surveyRoutes
 //const survey = {title: 'title X', subject: 'subject X', body: 'Do you have anything to be grateful for?', recipients: 'emailr.servant@gmail.com'}
@@ -49,14 +50,14 @@ configureStore({
 // if value is a function then reduxThunk will immediately call that function passing in dispatch(function) as an argument
 const store = createStore(reducers, {} as any, applyMiddleware(reduxThunk));
 
-const root = document.getElementById("root");
-render(
+const container = document.getElementById("root")!;
+createRoot(container).render(
   //Serves as "glue" between React
   //and the Redux side of our application:
   <Provider store={store}>
     <App />
-  </Provider>,
-  root
+  </Provider>
+  // container
 );
 
 console.log("STRIPE KEY IS", process.env.REACT_APP_STRIPE_KEY);
