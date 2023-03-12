@@ -8,6 +8,7 @@ import Mailer from "../services/Mailer.js";
 import surveyTemplate from "../services/templates/surveyTemplate.js";
 
 const router = Router();
+
 // Creates a new survey and sends out emails in batch
 router.post("/", requireLogin, requireCredits, async (req, res, next) => {
   const { title, subject, body, recipients } = req.body;
@@ -43,8 +44,20 @@ router.get("/", requireLogin, (req, res, next) => {
 router.get("/responded", (req, res, next) => {
   res.send("Thanks for voting!");
 });
+
+// Webhook route for SendGrid to send data on email clicks
+// https://sendgrid.com/docs/for-developers/tracking-events/event/#click-event
 router.post("/webhooks", (req, res, next) => {
+  console.log(req.body);
+  console.log("SendGrid webhook route hit!");
   res.send("unfinished route");
 });
+
+//It works like this:
+// 1. User clicks on link in email
+// 2. SendGrid waits for a bit
+// 3. SendGrid sends a POST request to our server with data about
+//    all the clicks that happened in the last 30 seconds or so
+// 4. We process that data and update our database
 
 export default router;
