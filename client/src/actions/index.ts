@@ -1,6 +1,8 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios from "axios";
 import { Dispatch } from "redux";
+import { FormState } from "../components/surveys/SurveyForm";
 import { FETCH_USER } from "./types";
+import { History } from "history";
 
 //TODO: ensure working proxy in dev & prod
 // axios.defaults.baseURL = "localhost:5000"?
@@ -30,3 +32,22 @@ export const handleToken = (token: string) => async (dispatch: Dispatch) => {
 
   dispatch({ type: FETCH_USER, payload: res.data });
 };
+
+/**
+ * Handles survey submission and redirects to /surveys on success.
+ * @param values Form values.
+ * @param history History object.
+ * @returns An async function for handling POST request and action dispatch.
+ */
+export const submitSurvey =
+  (values: FormState, history: History) => async (dispatch: Dispatch) => {
+    try {
+      const res = await axios.post("/api/surveys", values);
+      dispatch({ type: FETCH_USER, payload: res.data });
+      history.push("/surveys");
+    } catch (error) {
+      console.error(error);
+    }
+
+    return { type: "submit_survey" };
+  };
