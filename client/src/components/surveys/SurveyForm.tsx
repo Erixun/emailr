@@ -11,6 +11,16 @@ const DefaultLabel: StringIndexed = {
   body: "Email Body",
   recipients: "Recipient List",
 };
+
+// Github copilot keyboard shortcuts for a swedish keyboard
+
+// Accept inline code suggestion — Tab
+// Dismiss inline code suggestion — Esc
+// Show next suggestion — Alt + å or Alt + ] or Option (⌥) + ]
+// Show previous suggestion — Alt + ´ or Alt + [ or Option (⌥) + [
+// Trigger suggestion — Alt + § or Alt + \ or Option (⌥) + \
+// Open ten suggestions in a separate pane — Ctrl + Enter
+
 const DefaultState: StringIndexed = {
   title: "",
   subject: "",
