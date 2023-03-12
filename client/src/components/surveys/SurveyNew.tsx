@@ -1,6 +1,7 @@
 import SurveyForm from "./SurveyForm";
 import SurveyFormReview from "./SurveyFormReview";
 import { useState } from "react";
+import { reduxForm } from "redux-form";
 
 /**
  * Handles the creation of a new survey and transitions between
@@ -11,15 +12,18 @@ import { useState } from "react";
 const SurveyNew = () => {
   const [showFormReview, setShowFormReview] = useState(false);
   return (
-    <div>
+    <div className="container">
       {showFormReview ? (
-        <SurveyFormReview />
+        <SurveyFormReview onCancel={() => setShowFormReview(false)} />
       ) : (
-        //  onCancel={() => setShowFormReview(false)} />
         <SurveyForm onSurveySubmit={() => setShowFormReview(true)} />
       )}
     </div>
   );
 };
 
-export default SurveyNew;
+// This clears the form values when the component unmounts
+// since reduxForm config param destroyOnUnmount = true by default
+export default reduxForm({
+  form: "surveyForm",
+})(SurveyNew);

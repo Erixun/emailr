@@ -1,39 +1,70 @@
-import { connect, RootStateOrAny, useSelector } from "react-redux";
+import { connect, RootStateOrAny } from "react-redux";
 import { getFormValues } from "redux-form";
+import FormFields from "./FormFields";
+import * as actions from "../../actions";
+import "./surveys.css";
+import { useHistory } from "react-router-dom";
+import { History } from "history";
 
-const SurveyFormReview = ({ formValues }: { formValues: any }) => {
+const SurveyFormReview = ({
+  formValues,
+  onCancel,
+  submitSurvey,
+}: SurveyFormReviewProps) => {
   console.log(formValues);
-  // const formValues = getFormValues("surveyForm"); //useSelector((state: any) => state.form.surveyForm);
+
+  const renderFields = () =>
+    FormFields.map(({ label, name }: { label: string; name: string }) => (
+      <div className="field-review" key={name}>
+        <label>{label}</label>
+        <div className="field-value">{formValues[name]}</div>
+      </div>
+    ));
+
+  const history = useHistory();
+
+  const handleSubmit = () => {
+    console.log("submitting");
+    submitSurvey(formValues, history);
+  };
 
   return (
-    <div>
+    <div style={{ margin: "2rem 0" }}>
       <h5>Please confirm your entries</h5>
       <div>
-        <div>
-          <label>Survey Title</label>
-          <div>{formValues.title}</div>
-        </div>
-        <div>
-          <label>Subject Line</label>
-          <div>{formValues.subject}</div>
-        </div>
-        <div>
-          <label>Email Body</label>
-          <div>{formValues.body}</div>
-        </div>
-        <div>
-          <label>Recipient List</label>
-          <div>{formValues.recipients}</div>
-        </div>
+        {renderFields()}
+        <button className="yellow darken-3 btn-flat" onClick={onCancel}>
+          <i className="material-icons left">arrow_back</i>
+          Back
+        </button>
+        <button
+          className="teal white-text btn-flat right"
+          onClick={handleSubmit}
+        >
+          <i className="material-icons right">outgoing_mail</i>
+          Send Survey
+        </button>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state: RootStateOrAny) => {
+interface SurveyFormReviewProps {
+  formValues?: any;
+  onCancel?: () => void;
+  history?: History;
+  submitSurvey: (formValues: any, history: History) => void;
+}
+
+/**
+ * Takes the form values from the redux store and passes them to the component
+ * @param state - the redux store
+ * @returns {object} - the form values
+ */
+const mapStateToProps = (state: RootStateOrAny): object => {
   return {
     formValues: getFormValues("surveyForm")(state) || {},
   };
 };
 
-export default connect(mapStateToProps)(SurveyFormReview);
+export default connect(mapStateToProps, actions)(SurveyFormReview);
