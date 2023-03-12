@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm, Field, getFormValues } from "redux-form";
 import validateEmails from "../../utils/validateEmails";
 import SurveyField from "./SurveyField";
 //make indexable with string
@@ -34,15 +34,19 @@ const FIELDS = [
   { label: "Recipient List", name: "recipients", type: "email" },
 ];
 const initState = () => ({ ...DefaultState });
-
-const SurveyForm = ({ handleSubmit }: { handleSubmit: Function }) => {
+interface SurveyFormProps {
+  // onFormSubmit: Function;
+  onSurveySubmit: () => void;
+  invalid?: boolean;
+}
+const SurveyForm = ({ onSurveySubmit, invalid }: SurveyFormProps) => {
   //unused
-  const [formValues, setFormValues] = useState(initState());
+  // const [formValues, setFormValues] = useState(initState());
 
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormValues({ ...formValues, [name]: value });
-  };
+  // const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setFormValues({ ...formValues, [name]: value });
+  // };
 
   const renderFields = () =>
     FIELDS.map(({ label, name, type }) => (
@@ -55,13 +59,19 @@ const SurveyForm = ({ handleSubmit }: { handleSubmit: Function }) => {
       />
     ));
 
+  const handleSurveySubmit = (target: EventTarget) => {
+    console.log(target);
+    onSurveySubmit();
+  };
+
   // const toTitleCase = (str: string) =>
   //   str.replace(/\w\S*/g, (txt) => txt.replace(/^\w/, (c) => c.toUpperCase()));
   return (
     <div style={{ margin: "3rem 0" }}>
       {/* component="input" specifies the type of tag we want to show
       can be replaced by a component, eg SurveyField */}
-      <form onSubmit={handleSubmit((values: any) => console.log(values))}>
+      <form onSubmit={({ target }) => handleSurveySubmit(target)}>
+        {/* handleSubmit((values: any) => console.log(values)) */}
         {renderFields()}
         {/* TODO: determine if replace w renderField function */}
         {/* Generate 4 Field components in a loop */}
@@ -90,7 +100,11 @@ const SurveyForm = ({ handleSubmit }: { handleSubmit: Function }) => {
           </button>
           {/* Create a styled cancel button */}
         </Link>
-        <button type="submit" className="teal btn-flat right white-text">
+        <button
+          type="submit"
+          disabled={invalid}
+          className="teal btn-flat right white-text"
+        >
           Next
           <i className="material-icons right">arrow_forward</i>
         </button>
@@ -164,6 +178,8 @@ const validate = (values: typeof DefaultState) => {
   return errors;
 };
 
-export default reduxForm({ validate: validate, form: "surveyForm" })(
-  SurveyForm
-);
+export default reduxForm<StringIndexed, SurveyFormProps>({
+  validate: validate,
+  form: "surveyForm",
+  destroyOnUnmount: false,
+})(SurveyForm);
