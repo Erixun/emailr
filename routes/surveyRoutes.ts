@@ -1,9 +1,9 @@
-import { Request, Router } from "express";
-import mongoose from "mongoose";
+import { Router } from "express";
+import { Path } from "path-parser";
+import { URL } from "url";
 import requireCredits from "../middleware/requireCredits.js";
 import requireLogin from "../middleware/requireLogin.js";
 import Survey from "../models/Survey.js";
-import { IUser } from "../models/User.js";
 import Mailer from "../services/Mailer.js";
 import surveyTemplate from "../services/templates/surveyTemplate.js";
 
@@ -48,8 +48,54 @@ router.get("/responded", (req, res, next) => {
 // Webhook route for SendGrid to send data on email clicks
 // https://sendgrid.com/docs/for-developers/tracking-events/event/#click-event
 router.post("/webhooks", (req, res, next) => {
-  console.log(req.body);
   console.log("SendGrid webhook route hit!");
+  // URL.
+  // path.parse(req.body);
+  // console.log(req.body);
+  const events = req.body
+    .filter(({ event }: { event: string }) => event === "click")
+    .map(
+      ({
+        event,
+        url,
+        email,
+      }: {
+        event: string;
+        url: string;
+        email: string;
+      }) => {
+        if (event !== "click") return null;
+        console.log(url);
+        const pathname = new URL(url).pathname;
+        const p = new Path("/api/surveys/:surveyId/:choice");
+        // const p = path.parse(pathname);
+        const { surveyId, choice } = p.test(pathname) || {};
+        console.log(p);
+        return {
+          email: email,
+          surveyId: surveyId,
+          choice: choice,
+        };
+      }
+    )
+    .filter(
+      //Filter out duplicate surveyId/email pairs
+      (
+        { email, surveyId }: { email: string; surveyId: string },
+        index: number,
+        arr: { email: string; surveyId: string }[]
+      ) => {
+        return (
+          arr.findIndex(
+            (e: { email: string; surveyId: string }) =>
+              e.email === email && e.surveyId === surveyId
+          ) === index
+        );
+      }
+    );
+
+  console.log(events);
+
   res.send("unfinished route");
 });
 
