@@ -92,6 +92,32 @@ router.post("/webhooks", (req, res, next) => {
           ) === index
         );
       }
+    )
+    .forEach(
+      ({
+        email,
+        surveyId,
+        choice,
+      }: {
+        email: string;
+        surveyId: string;
+        choice: string;
+      }) => {
+        Survey.updateOne(
+          {
+            _id: surveyId,
+            recipients: {
+              // $ is a mongo operator, $elemMatch is a suboperator
+              $elemMatch: { email: email, responded: false },
+            },
+          },
+          {
+            $inc: { [choice]: 1 },
+            $set: { "recipients.$.responded": true },
+            lastResponded: new Date(),
+          }
+        ).exec();
+      }
     );
 
   console.log(events);
