@@ -41,7 +41,7 @@ router.post("/", requireLogin, requireCredits, async (req, res, next) => {
 router.get("/", requireLogin, (req, res, next) => {
   res.send("unfinished route");
 });
-router.get("/responded", (req, res, next) => {
+router.get("/:surveyId/:response", (req, res, next) => {
   res.send("Thanks for voting!");
 });
 
@@ -52,7 +52,7 @@ router.post("/webhooks", (req, res, next) => {
   // URL.
   // path.parse(req.body);
   // console.log(req.body);
-  const events = req.body
+  req.body
     .filter(({ event }: { event: string }) => event === "click")
     .map(
       ({
@@ -105,22 +105,23 @@ router.post("/webhooks", (req, res, next) => {
       }) => {
         Survey.updateOne(
           {
-            _id: surveyId,
+            _id: surveyId, //_id is the mongo id
             recipients: {
               // $ is a mongo operator, $elemMatch is a suboperator
+              // filter recipients with matching email and responded: false
               $elemMatch: { email: email, responded: false },
             },
           },
           {
+            //count of yes/no responses
             $inc: { [choice]: 1 },
+            //update the recipient's responded field to true
             $set: { "recipients.$.responded": true },
-            lastResponded: new Date(),
+            // lastResponded: new Date(),
           }
         ).exec();
       }
     );
-
-  console.log(events);
 
   res.send("unfinished route");
 });
