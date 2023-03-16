@@ -41,7 +41,7 @@ router.post("/", requireLogin, requireCredits, async (req, res, next) => {
 router.get("/", requireLogin, (req, res, next) => {
   res.send("unfinished route");
 });
-router.get("/:surveyId/:response", (req, res, next) => {
+router.get("/:surveyId/:choice", (req, res, next) => {
   res.send("Thanks for voting!");
 });
 
@@ -115,9 +115,10 @@ router.post("/webhooks", (req, res, next) => {
           {
             //count of yes/no responses
             $inc: { [choice]: 1 },
-            //update the recipient's responded field to true
+            //update each recipient's responded field to true
             $set: { "recipients.$.responded": true },
-            // lastResponded: new Date(),
+            //date of last response
+            lastResponded: new Date(),
           }
         ).exec();
       }
