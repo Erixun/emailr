@@ -134,4 +134,8 @@ router.post("/webhooks", (req, res, next) => {
 //    all the clicks that happened in the last 30 seconds or so
 // 4. We process that data and update our database
 
+// Google the mongoose operation you want to do,
+// then look at the mongoose docs to see how to do it in code.
+// You can also use the node cli to test out mongoose operations.
+
 export default router;
