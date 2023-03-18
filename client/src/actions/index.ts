@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 import { FormState } from "../components/surveys/SurveyForm";
-import { FETCH_USER } from "./types";
+import { FETCH_SURVEYS, FETCH_USER } from "./types";
 import { History } from "history";
 
 //TODO: ensure working proxy in dev & prod
@@ -51,3 +51,14 @@ export const submitSurvey =
 
     return { type: "submit_survey" };
   };
+
+/**
+ * Fetches all surveys owned by the user.
+ * @returns An async function for handling GET request and action dispatch.
+ * @todo Add error handling.
+ */
+export const fetchSurveys = () => async (dispatch: Dispatch) => {
+  const res = await axios.get("/api/surveys");
+
+  dispatch({ type: FETCH_SURVEYS, payload: res.data });
+};

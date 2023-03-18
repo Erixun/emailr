@@ -9,9 +9,10 @@ import Dashboard from "./Dashboard";
 import SurveyNew from "./surveys/SurveyNew";
 
 //TODO: convert to functional component
-class App extends Component<{ fetchUser: Function }> {
+class App extends Component<{ fetchUser: Function; fetchSurveys: Function }> {
   componentDidMount(): void {
     this.props.fetchUser();
+    this.props.fetchSurveys();
   }
   // useEffect(() => {})
   render() {
