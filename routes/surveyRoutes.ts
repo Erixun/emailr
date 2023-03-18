@@ -38,9 +38,22 @@ router.post("/", requireLogin, requireCredits, async (req, res, next) => {
     return res.status(422).send(error);
   }
 });
-router.get("/", requireLogin, (req, res, next) => {
-  res.send("unfinished route");
+
+router.get("/", requireLogin, async (req, res, next) => {
+  console.log("get surveys route hit!");
+  try {
+    //find all surveys owned by the user excluding the recipients field
+    const userSurveys = await Survey.find({ _user: req.user?.id }).select({
+      recipients: false,
+    });
+
+    res.send(userSurveys);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
 });
+
 router.get("/:surveyId/:choice", (req, res, next) => {
   res.send("Thanks for voting!");
 });
