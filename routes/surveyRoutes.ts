@@ -43,11 +43,22 @@ router.get("/", requireLogin, async (req, res, next) => {
   console.log("get surveys route hit!");
   try {
     //find all surveys owned by the user excluding the recipients field
-    const userSurveys = await Survey.find({ _user: req.user?.id }).select({
-      recipients: false,
+
+    const userSurveys = await Survey.find({ _user: req.user?.id }); //.select({
+    //   recipients: false,
+    // });
+
+    const userSurveysWithRecipientCount = userSurveys.map((survey) => {
+      return {
+        //@ts-ignore
+        ...survey._doc,
+        recipientCount: survey.recipients.length,
+      };
     });
 
-    res.send(userSurveys);
+    //count the number of recipients in each survey
+
+    res.send(userSurveysWithRecipientCount);
   } catch (error) {
     console.log(error);
     res.status(500).send(error);
