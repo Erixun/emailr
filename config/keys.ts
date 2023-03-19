@@ -1,8 +1,8 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 import { env } from "process";
-import * as dev from "./dev.js";
-import * as prod from "./prod.js";
+// import * as dev from "./dev.js";
+// import * as prod from "./prod.js";
 
 const isProd = process.env.NODE_ENV === "production";
 // if (process.env.NODE_ENV === "production") {
@@ -12,7 +12,7 @@ const isProd = process.env.NODE_ENV === "production";
 //   //return dev keys
 //   module.exports = prod;
 // }
-export const keys = isProd ? prod : dev;
+// export const keys = isProd ? prod : dev;
 
 export const {
   GOOGLE_CLIENT_ID,
