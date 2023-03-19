@@ -26,6 +26,7 @@ router.post("/", requireLogin, requireCredits, async (req, res, next) => {
   });
 
   // Great place to send an email! (WIP)
+  //@ts-ignore
   const mailer = new Mailer(survey, surveyTemplate(survey));
   try {
     await mailer.send();
