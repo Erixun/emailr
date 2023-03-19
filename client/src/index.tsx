@@ -8,13 +8,13 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 import reducers from "./reducers";
 import App from "./components/App";
 import reduxThunk from "redux-thunk";
-import axios from "axios";
+// import axios from "axios";
 import { createRoot } from "react-dom/client";
 
 //In order to test requests to surveyRoutes
 //const survey = {title: 'title X', subject: 'subject X', body: 'Do you have anything to be grateful for?', recipients: 'emailr.servant@gmail.com'}
 //@ts-ignore
-window.axios = axios;
+// window.axios = axios;
 
 interface CounterState {
   value: number;
