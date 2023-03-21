@@ -72,8 +72,9 @@ const validate = (values: FormState) => {
     ({ name, label, type }: { name: string; label: string; type: string }) => {
       if (!values[name]) errors[name] = `${label} is required`;
 
-      if (values[name] && type === "email") {
-        errors[name] = validateEmails(values[name]) || "";
+      if (values[name] && name === "recipients") {
+        const emailValidation = validateEmails(values[name]);
+        if (emailValidation) errors[name] = emailValidation;
       }
     }
   );
